@@ -1,0 +1,65 @@
+openapi: '3.0.0'
+
+info:
+  description: Helper for blind people.
+  version: '1.0'
+  title: Eye Tales API
+
+servers:
+  - url: http://34.89.52.65:8080
+    description: Production endpoint.
+  - url: http://localhost:8080
+    description: Development endpoint.
+
+tags:
+  - name: describe
+    description: endpoint for describing what there are around.
+
+paths:
+  /describe:
+    post:
+      tags:
+        - basic
+      summary: Describes what there are around given an image.
+      description: Invoke this endpoint to describe what there are around given an image.
+      operationId: src.api.describe.post
+      requestBody:
+        required: true
+        description: Body wrapper for the request.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image_base64:
+                  type: string
+                  description: A urlsafe base64 encoded image. Either image_url or image_base64 must be specified.
+      responses:
+        200:
+          description: Standard Eye Tales API JSON response. You should check the `error` attribute to determine if there was an error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIResponse'
+        default:
+          description: Unexpected error.
+          content:
+            application/text:
+              schema:
+                type: string
+                description: Error description.
+
+components:
+  schemas:
+    APIResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          description: Whether or not the request was successfully processed or not.
+        message:
+          type: string
+          description: Error message if the request was unsuccessful.
+        response:
+          type: object
+          description: Contains the response data if the request was successful.
