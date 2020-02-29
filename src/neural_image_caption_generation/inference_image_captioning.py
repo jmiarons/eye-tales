@@ -100,7 +100,7 @@ def init():
 	decoder = RNN_Decoder(embedding_dim, units, vocab_size)
 	encoder.load_weights('weights/encoder')
 	decoder.load_weights('weights/decoder')
-	return encoder, decoder, max_length, image_features_extract_model
+	return encoder, decoder, max_length, image_features_extract_model, tokenizer
 
 
 BATCH_SIZE = 64
@@ -209,7 +209,7 @@ def load_image(image_path):
 	return img, image_path
 
 
-def evaluate(image, max_length, encoder, decoder, image_features_extract_model):
+def evaluate(image, max_length, encoder, decoder, image_features_extract_model, tokenizer):
 	# Evaluate
 	hidden = decoder.reset_state(batch_size=1)
 
@@ -239,5 +239,5 @@ def evaluate(image, max_length, encoder, decoder, image_features_extract_model):
 if __name__ == '__main__':
 	url = "https://i.ytimg.com/vi/ianIz4tKoDA/maxresdefault.jpg"
 	download_image(url)
-	encoder, decoder, max_length, image_features_extractor = init()
-	evaluate("1.jpg", max_length, encoder, decoder, image_features_extractor)
+	encoder, decoder, max_length, image_features_extractor, tokenizer = init()
+	evaluate("1.jpg", max_length, encoder, decoder, image_features_extractor, tokenizer)
