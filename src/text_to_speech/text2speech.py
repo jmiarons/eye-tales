@@ -1,10 +1,16 @@
-import argparse
+# noinspection PyPackageRequirements
 from google.cloud import texttospeech
 
-def synthesize_text(text):
-    """Synthesizes speech from the input string of text."""
-    client = texttospeech.TextToSpeechClient()
 
+def _saved_to_file(response):
+    # The response's audio_content is binary.
+    with open('output.mp3', 'wb') as out:
+        out.write(response.audio_content)
+        print('Audio content written to file "output.mp3"')
+
+
+def synthesize_text(text):
+    client = texttospeech.TextToSpeechClient()
     input_text = texttospeech.types.SynthesisInput(text=text)
 
     # Note: the voice can also be specified by name.
@@ -18,17 +24,12 @@ def synthesize_text(text):
         audio_encoding=texttospeech.enums.AudioEncoding.MP3)
 
     response = client.synthesize_speech(input_text, voice, audio_config)
+    # _saved_to_file(response)
     return response.audio_content
-    """
-    # The response's audio_content is binary.
-    with open('output.mp3', 'wb') as out:
-        out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
-    """
+
 
 def synthesize_ssml(ssml):
     client = texttospeech.TextToSpeechClient()
-
     input_text = texttospeech.types.SynthesisInput(ssml=ssml)
 
     # Note: the voice can also be specified by name.
@@ -42,24 +43,5 @@ def synthesize_ssml(ssml):
         audio_encoding=texttospeech.enums.AudioEncoding.MP3)
 
     response = client.synthesize_speech(input_text, voice, audio_config)
+    # _saved_to_file(response)
     return response.audio_content
-    # The response's audio_content is binary.
-    """
-    with open('output.mp3', 'wb') as out:
-        out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
-    """
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--text',
-                       help='The text from which to synthesize speech.')
-    parser.add_argument('--ssml',
-                       help='The ssml string from which to synthesize speech.')
-
-    args = parser.parse_args()
-
-    if args.text:
-        synthesize_text(args.text)
-    else:
-        synthesize_ssml(args.ssml)
