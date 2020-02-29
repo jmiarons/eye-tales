@@ -1,0 +1,37 @@
+version: '3.5'
+services:
+
+  api:
+    image: eye_tales_api
+    container_name: eye_tales_api
+    env_file:
+      - src/.env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - eye_tales
+    ports:
+      - 9080:9080
+      - 3080:3080
+    restart: always
+    depends_on:
+      - api_nginx
+    volumes:
+      - './data:/srv/eye_tales/data'
+  api_nginx:
+    image: eye_tales_api_nginx
+    container_name: eye_tales_api_nginx
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    networks:
+      - eye_tales
+    ports:
+      - 8080:8080
+    restart: always
+
+networks:
+  eye_tales:
+    name: eye_tales
+    driver: bridge
