@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-# Commented out IPython magic to ensure Python compatibility.
-try:
-#   %tensorflow_version 2.x
-except Exception:
-  pass
 import tensorflow as tf
-
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
+from tqdm import tqdm
 
 import re
 import numpy as np
@@ -21,7 +15,6 @@ import json
 from glob import glob
 from PIL import Image
 import pickle
-from tqdm import tqdm
 
 
 # Download caption annotation files
@@ -46,7 +39,8 @@ if not os.path.exists(os.path.abspath('.') + image_folder):
 else:
   PATH = os.path.abspath('.') + image_folder
 
-"""## Limit the size of the training set 
+## Limit the size of the training set 
+"""
 Use a subset of 30,000 captions and their corresponding images to train our model. Choosing to use more data would result in improved captioning quality.
 """
 
@@ -79,7 +73,7 @@ img_name_vector = img_name_vector[:num_examples]
 
 len(train_captions), len(all_captions)
 
-"""## Preprocess the images using InceptionV3"""
+## Preprocess the images using InceptionV3
 
 def load_image(image_path):
     img = tf.io.read_file(image_path)
@@ -88,7 +82,7 @@ def load_image(image_path):
     img = tf.keras.applications.inception_v3.preprocess_input(img)
     return img, image_path
 
-"""## Initialize InceptionV3 and load the pretrained Imagenet weights"""
+## Initialize InceptionV3 and load the pretrained Imagenet weights
 
 image_model = tf.keras.applications.InceptionV3(include_top=False,
                                                 weights='imagenet')
@@ -97,7 +91,7 @@ hidden_layer = image_model.layers[-1].output
 
 image_features_extract_model = tf.keras.Model(new_input, hidden_layer)
 
-"""## Caching the features extracted from InceptionV3"""
+## Caching the features extracted from InceptionV3
 
 # Get unique images
 encode_train = sorted(set(img_name_vector))
@@ -151,13 +145,10 @@ img_name_train, img_name_val, cap_train, cap_val = train_test_split(img_name_vec
 
 len(img_name_train), len(cap_train), len(img_name_val), len(cap_val)
 
-"""## Create a tf.data dataset for training
-
+## Create a tf.data dataset for training
+"""
 Our images and captions are ready! Next, let's create a tf.data dataset to use for training our model.
 """
-
-# Feel free to change these parameters according to your system's configuration
-
 BATCH_SIZE = 64
 BUFFER_SIZE = 1000
 embedding_dim = 256
@@ -410,7 +401,7 @@ def plot_attention(image, result, attention_plot):
         ax = fig.add_subplot(len_result//2, len_result//2, l+1)
         ax.set_title(result[l])
         img = ax.imshow(temp_image)
-        ax.imshow(temp_att, cmap='gray', alpha=0.6, extent=img.get_extent())
+        ax.imshow(temp_att, cmap='inferno', alpha=0.6, extent=img.get_extent())
 
     plt.tight_layout()
     plt.show()

@@ -1,5 +1,7 @@
 connexion[swagger-ui]
+textblob
 Flask
+ntlk
 Flask-Cors
 uWSGI
 uwsgitop
