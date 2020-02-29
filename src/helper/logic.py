@@ -1,6 +1,8 @@
 from expiringdict import ExpiringDict
 
+from src.helper.detections import DETECTIONS_LIST
 from src.transloadit import transloadit
+
 
 __format = '{}|{}'
 __cache = ExpiringDict(max_len=256, max_age_seconds=10)
@@ -20,5 +22,6 @@ def _from_labels_to_sentence(label_list):
 
 def describe(session_id, image_path):
     transloadit_result = transloadit.process(image_path)
-    sentence = _from_labels_to_sentence(transloadit_result)
+    result = [i.lower() for i in transloadit_result if i.lower() in DETECTIONS_LIST]
+    sentence = _from_labels_to_sentence(result)
     return sentence
