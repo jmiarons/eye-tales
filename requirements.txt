@@ -2,7 +2,6 @@ connexion[swagger-ui]
 pytransloadit
 textblob
 Flask
-ntlk
 Flask-Cors
 uWSGI
 uwsgitop

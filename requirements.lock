@@ -1,4 +1,6 @@
 connexion==2.6.0
+pytransloadit==0.1.10
+textblob==0.15.3
 Flask==1.1.1
 Flask-Cors==3.0.8
 uWSGI==2.0.18
@@ -23,6 +25,7 @@ chardet==3.0.4
 Click==7.0
 clickclick==1.2.2
 cycler==0.10.0
+future==0.18.2
 gast==0.2.2
 google-api-core==1.16.0
 google-auth==1.11.2
@@ -62,6 +65,8 @@ swagger-ui-bundle==0.0.6
 tensorboard==2.1.0
 tensorflow-estimator==2.1.0
 termcolor==1.1.0
+tinydb==3.15.2
+tuspy==0.2.4
 urllib3==1.25.8
 Werkzeug==1.0.0
 wrapt==1.12.0
