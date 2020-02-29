@@ -31,12 +31,12 @@ def calc_max_length(tensor):
 
 def download_image(url):
 	try:
-		response = requests.get(url)
-		img = Image.open(BytesIO(response.content)).resize((256, 256), Image.LANCZOS).convert('RGB')
-                encodingbuffer = cStringIO.StringIO()
-                img.save(encodingbuffer, format="JPEG")
-                encodedimage = base64.b64encode(encodingbuffer.getvalue())
-                return encodedimage
+            response = requests.get(url)
+            img = Image.open(BytesIO(response.content)).resize((256, 256), Image.LANCZOS).convert('RGB')
+            encodingbuffer = cStringIO.StringIO()
+            img.save(encodingbuffer, format="JPEG")
+            encodedimage = base64.b64encode(encodingbuffer.getvalue())
+            return encodedimage
 	except Exception as e:
 		print('Error {}'.format(e))
 		exit(1)
