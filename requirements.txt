@@ -1,0 +1,15 @@
+connexion[swagger-ui]
+Flask
+Flask-Cors
+uWSGI
+uwsgitop
+requests
+nltk
+google-cloud-speech
+google-cloud-texttospeech
+scikit-learn
+matplotlib
+tensorflow
+numpy
+Pillow
+tqdm
