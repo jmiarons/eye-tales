@@ -18,11 +18,28 @@ import json
 from glob import glob
 from PIL import Image
 import pickle
+import io
+import base64
+import cStringIO
+
 
 
 # Find the maximum length of any caption in our dataset
 def calc_max_length(tensor):
     return max(len(t) for t in tensor)
+
+
+def download_image(url):
+	try:
+            response = requests.get(url)
+            img = Image.open(BytesIO(response.content)).resize((256, 256), Image.LANCZOS).convert('RGB')
+            encodingbuffer = cStringIO.StringIO()
+            img.save(encodingbuffer, format="JPEG")
+            encodedimage = base64.b64encode(encodingbuffer.getvalue())
+            return encodedimage
+	except Exception as e:
+		print('Error {}'.format(e))
+		exit(1)
 
 
 def init():
@@ -185,7 +202,7 @@ def load_image(img):
 
 
 def evaluate(image, encoder, decoder):
-	# Evaluate
+    # Evaluate
 
     hidden = decoder.reset_state(batch_size=1)
 
@@ -211,4 +228,7 @@ def evaluate(image, encoder, decoder):
 
     return result
 
-
+if __name__ == '__main__':
+    url = "https://i.ytimg.com/vi/ianIz4tKoDA/maxresdefault.jpg"
+    image = download_image(url)
+    print(type(image))
