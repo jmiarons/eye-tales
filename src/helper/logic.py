@@ -1,3 +1,4 @@
+from random import choice
 from expiringdict import ExpiringDict
 
 from src.transloadit import transloadit
@@ -14,8 +15,18 @@ def _refresh(session_id, key, refreshed_element):
     __cache[__format.format(session_id, key)] = refreshed_element
 
 
+
 def _from_labels_to_sentence(label_list):
-    return ''
+	possibilities = ['There is a', 'You are approaching', 'Nearby you have']
+	length = len(label_list)
+	if length > 1:
+		if length == 2:
+			result = '{} {} and {}.'.format(choice(possibilities),",".join(label_list[:-1]), label_list[-1]) 
+		else:
+			result = '{} {} and {}.'.format(choice(possibilities),",".join(label_list[:-1]), label_list[-1]) 
+	else:
+
+	return ''
 
 
 def describe(image_path):
