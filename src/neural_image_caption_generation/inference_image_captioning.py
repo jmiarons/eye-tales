@@ -88,12 +88,19 @@ def init():
 	# Calculates the max_length, which is used to store the attention weights
 	max_length = calc_max_length(train_seqs)
 
+	image_model = tf.keras.applications.InceptionV3(include_top=False,
+													weights='imagenet')
+	new_input = image_model.input
+	hidden_layer = image_model.layers[-1].output
+
+	image_features_extract_model = tf.keras.Model(new_input, hidden_layer)
+
 	# Encoder and Decoder
 	encoder = CNN_Encoder(embedding_dim)
 	decoder = RNN_Decoder(embedding_dim, units, vocab_size)
 	encoder.load_weights('weights/encoder')
 	decoder.load_weights('weights/decoder')
-	return encoder, decoder, max_length
+	return encoder, decoder, max_length, image_features_extract_model
 
 
 BATCH_SIZE = 64
@@ -202,7 +209,7 @@ def load_image(image_path):
 	return img, image_path
 
 
-def evaluate(image, max_length, encoder, decoder):
+def evaluate(image, max_length, encoder, decoder, image_features_extract_model):
 	# Evaluate
 	hidden = decoder.reset_state(batch_size=1)
 
@@ -232,5 +239,5 @@ def evaluate(image, max_length, encoder, decoder):
 if __name__ == '__main__':
 	url = "https://i.ytimg.com/vi/ianIz4tKoDA/maxresdefault.jpg"
 	download_image(url)
-	encoder, decoder, max_length = init()
-	evaluate(image, max_length, encoder, decoder)
+	encoder, decoder, max_length, image_features_extractor = init()
+	evaluate("1.jpg", max_length, encoder, decoder, image_features_extractor)
