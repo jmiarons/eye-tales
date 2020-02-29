@@ -18,7 +18,7 @@ def _from_labels_to_sentence(label_list):
     return ''
 
 
-def describe(image_path):
+def describe(session_id, image_path):
     transloadit_result = transloadit.process(image_path)
     sentence = _from_labels_to_sentence(transloadit_result)
     return sentence
