@@ -16,3 +16,5 @@ numpy
 Pillow
 tqdm
 expiringdict
+playsound
+pyobjc
