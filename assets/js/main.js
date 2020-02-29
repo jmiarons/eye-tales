@@ -12,6 +12,7 @@ console.log(canvas.toDataURL());
 }
 
 function start() {
+	canvas.style.visibility="hidden";
 	window.setInterval(function() {
 		process();
 	}, 1000);
