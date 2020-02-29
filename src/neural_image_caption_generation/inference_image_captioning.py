@@ -12,6 +12,7 @@ from sklearn.utils import shuffle
 
 import re
 import random
+import uuid
 import requests
 import numpy as np
 import os
@@ -210,10 +211,17 @@ def load_image(image_path):
 
 
 def evaluate(image, max_length, encoder, decoder, image_features_extract_model, tokenizer):
+	image_data = base64.b64decode(image)
+	output_path = f'./{uuid.uuid4()}.jpg'
+	with open(output_path, 'wb') as f:
+		f.write(image_data)
+	with Image.open(output_path).convert('RGBA') as img:
+		img.save(output_path, format='PNG', quality=95)
+
 	# Evaluate
 	hidden = decoder.reset_state(batch_size=1)
 
-	temp_input = tf.expand_dims(load_image(image)[0], 0)
+	temp_input = tf.expand_dims(load_image(output_path)[0], 0)
 	img_tensor_val = image_features_extract_model(temp_input)
 	img_tensor_val = tf.reshape(img_tensor_val, (img_tensor_val.shape[0], -1, img_tensor_val.shape[3]))
 
@@ -232,12 +240,12 @@ def evaluate(image, max_length, encoder, decoder, image_features_extract_model, 
 			return result
 
 		dec_input = tf.expand_dims([predicted_id], 0)
-
+	print(result)
 	return result
 
 
 if __name__ == '__main__':
-	url = "https://i.ytimg.com/vi/ianIz4tKoDA/maxresdefault.jpg"
+	url = "https://www.thephoblographer.com/wp-content/uploads/2019/03/130-770x513.jpg"
 	download_image(url)
 	encoder, decoder, max_length, image_features_extractor, tokenizer = init()
 	evaluate("1.jpg", max_length, encoder, decoder, image_features_extractor, tokenizer)
