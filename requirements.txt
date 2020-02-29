@@ -1,4 +1,5 @@
 connexion[swagger-ui]
+pytransloadit
 textblob
 Flask
 ntlk
