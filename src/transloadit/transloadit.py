@@ -19,7 +19,7 @@ def main(image):
 	})
 
 	# Add image to upload
-	encoded_string = base64.b64encode(image.read())
+	encoded_string = base64.b64decode(image_base64)
 	assembly.add_file(encoded_string)
 
 	# Start the Assembly

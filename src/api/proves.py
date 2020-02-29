@@ -21,19 +21,15 @@ class State();
 			
 
 
-def create_text(image64):
-	image_data = base64.b64decode(image_base64)
-
-
-
 
 
 	
 if __name__ == '__main__':
+	"""
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--image', help='Base 64 image.')
 	args = parser.parse_args()
 	
 	if args.image:
 		text = create_text(args.image)
 		print(text)	
+	"""
