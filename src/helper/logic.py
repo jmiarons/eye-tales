@@ -1,7 +1,7 @@
 from random import choice
 from expiringdict import ExpiringDict
 
-from src.helper.detections import DETECTIONS_LIST
+from src.helper.detections import DETECTIONS_LIST, SENTENCE_BEGIN
 from src.transloadit import transloadit
 
 
@@ -28,16 +28,13 @@ def _extract_new_detections(session_id, result):
 
 
 def _from_labels_to_sentence(label_list):
-	possibilities = ['There is a', 'You are approaching', 'Nearby you have']
-	length = len(label_list)
-	if length > 1:
-		if length == 2:
-			result = '{} {} and {}.'.format(choice(possibilities),",".join(label_list[:-1]), label_list[-1]) 
-		else:
-			result = '{} {} and {}.'.format(choice(possibilities),",".join(label_list[:-1]), label_list[-1]) 
-	else:
-
-	return ''
+    if label_list:
+        if len(label_list) == 1:
+            object_list_str = 'a {}'.format(label_list[0])
+        else:
+            object_list_str = '{} and a {}'.format(', '.join(label_list[:-1]), label_list[-1])
+        return '{} {}'.format(choice(SENTENCE_BEGIN), object_list_str)
+    return None
 
 
 def describe(session_id, image_path):

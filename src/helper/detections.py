@@ -14,3 +14,9 @@ DETECTIONS_LIST = [
     'headphones',
     'bottle'
 ]
+
+SENTENCE_BEGIN = [
+    'There is',
+    'You are approaching',
+    'Nearby you have'
+]
