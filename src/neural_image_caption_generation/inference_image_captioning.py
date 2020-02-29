@@ -51,7 +51,8 @@ def init():
 												 extract=True)
 		annotation_file = os.path.dirname(annotation_zip) + '/annotations/captions_train2014.json'
 		os.remove(annotation_zip)
-
+        else:
+            annotation_file = './annotations/captions_train2014.json'
 	# Read the json file
 	with open(annotation_file, 'r') as f:
 		annotations = json.load(f)
@@ -212,7 +213,7 @@ def load_image(image_path):
 
 def evaluate(image, max_length, encoder, decoder, image_features_extract_model, tokenizer):
 	image_data = base64.b64decode(image)
-	output_path = f'./{uuid.uuid4()}.jpg'
+	output_path = f'{uuid.uuid4()}.jpg'
 	with open(output_path, 'wb') as f:
 		f.write(image_data)
 	with Image.open(output_path).convert('RGBA') as img:
