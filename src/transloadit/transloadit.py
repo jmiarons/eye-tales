@@ -15,12 +15,14 @@ def process(image_path):
 		})
 
 		# Add image to upload
-		assembly.add_file(open(image_path, 'rb'))
+		image_file = open(image_path, 'rb')
+		assembly.add_file(image_file)
 
 		# Start the Assembly
 		assembly_response = assembly.create(retries=5, wait=True)
 		result = assembly_response.data.get('results', {})
 		detections = result.get('described', [{}])[0].get('meta', {}).get('descriptions', [])
+		image_file.close()
 		return detections
 	except Exception as e:
 		print('error: could not process image through transloadit: {}'.format(e))
