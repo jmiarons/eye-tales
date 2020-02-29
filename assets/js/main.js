@@ -3,7 +3,7 @@ if(navigator.getUserMedia) {
 	navigator.getUserMedia({video: true}, handleVideo, videoError);
 }
 function handleVideo (stream) {
-	document.querySelector('#vid').src = window.URL.createobjectURL(stream);
+	document.querySelector('#vid').src = window.URL.createObjectURL(stream);
 }
 function videoError(e) {
 	alert("There has some problem");
