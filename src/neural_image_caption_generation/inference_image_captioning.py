@@ -30,7 +30,6 @@ def calc_max_length(tensor):
 	return max(len(t) for t in tensor)
 
 
-
 def download_image(url):
 	try:
 		response = requests.get(url)
@@ -51,8 +50,9 @@ def init():
 												 extract=True)
 		annotation_file = os.path.dirname(annotation_zip) + '/annotations/captions_train2014.json'
 		os.remove(annotation_zip)
-        else:
-            annotation_file = './annotations/captions_train2014.json'
+
+	else:
+		annotation_file = './annotations/captions_train2014.json'
 	# Read the json file
 	with open(annotation_file, 'r') as f:
 		annotations = json.load(f)
@@ -105,8 +105,6 @@ def init():
 	return encoder, decoder, max_length, image_features_extract_model, tokenizer
 
 
-BATCH_SIZE = 64
-BUFFER_SIZE = 1000
 embedding_dim = 256
 units = 512
 top_k = 5000
