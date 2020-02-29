@@ -4,11 +4,14 @@
 		<title>Webcam</title>
 	</head>
 	<body>
+		<link rel="stylesheet" type="text/css" href="assets/styles/main.css" media="screen"/>
+		<div class="button_container">
+			<input type="button" onclick="start()" class="btn-push blue" value="Start" />
+		</div>
 		<center>
-			<input type="button" onclick="start()" value="Start" />
 			<video id="vid" autoplay="true">Error</video>
 			<canvas id="canvas" width=320 height=240></canvas>
 		</center>
-	<script type="text/javascript" src="assets/js/main.js"></script>
+		<script type="text/javascript" src="assets/js/main.js"></script>
 	</body>
 </html>
