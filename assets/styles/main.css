@@ -1,74 +1,88 @@
-html {
-	height: 100%;
-}
 body {
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	background: #C9ADA7;
-	text-align: center;
+    margin: 0;
+    background: #C9ADA7;
 }
-p {
-	margin: 20px 0 20px 0;
-	padding: 20px 0 20px 0;
+
+video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+    background-size: cover;
+    transition: 1s opacity;
 }
-.button_container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: inherit;
+
+.button {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: #333333;
+    color: white;
+    text-transform: uppercase;
+    border: 0;
+    padding: 20px 40px;
+    z-index: 2;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 5px;
+    transition: all .5s;
+    overflow: hidden;
 }
-.btn-push {
-	position: center;
-	top: 0px;
-	font-family: "Open Sans";
-	text-decoration: none;
-	font-size: 25px;
-	background: #f7f7f7;
-	padding: 15px 50px;
-	margin: 0 10px;
-	border: 1px solid #c4c4c4;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0px 5px 0px #c4c4c4;
-	-moz-box-shadow: 0px 5px 0px #c4c4c4;
-	-ms-box-shadow: 0px 5px 0px #c4c4c4;
-	-o-box-shadow: 0px 5px 0px #c4c4c4;
-	box-shadow: 0px 5px 0px #c4c4c4;
-	color: #222;
-	text-shadow: 1px 1px 1px #fff;
-	-webkit-transition: All 250ms ease;
-	-moz-transition: All 250ms ease;
-	-o-transition: All 250ms ease;
-	-ms-transition: All 250ms ease;
-	transition: All 250ms ease;
+
+.button:hover {
+    background: #333333;
 }
-.btn-push:active {
-position: relative;
-top: 5px;
--webkit-box-shadow: none !important;
--moz-box-shadow: none !important;
--ms-box-shadow: none !important;
--o-box-shadow: none !important;
-box-shadow: none !important;
--webkit-transition: All 250ms ease;
--moz-transition: All 250ms ease;
--o-transition: All 250ms ease;
--ms-transition: All 250ms ease;
-transition: All 250ms ease;
+
+.button--hide {
+    opacity: 0;
 }
-.btn-push.blue {
-background: #1b486d;
-color: #fff;
-border: 1px solid #07121b;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
--webkit-box-shadow: 0px 5px 0px #07121b;
--moz-box-shadow: 0px 5px 0px #07121b;
--ms-box-shadow: 0px 5px 0px #07121b;
--o-box-shadow: 0px 5px 0px #07121b;
-box-shadow: 0px 5px 0px #07121b;
-text-shadow: 1px 1px 1px #07121b;
+
+.button--loading {
+    padding-left: 70px;
+}
+
+.button .button__loader {
+    float: left;
+    position: absolute;
+    left: -50px;
+    top: 15px;
+    transition: all .2s;
+}
+
+.button--loading .button__loader {
+    left: 15px;
+}
+
+.loader, .loader:after {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+.loader {
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 4px solid rgba(255, 255, 255, 0.2);
+    border-right: 4px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 4px solid rgba(255, 255, 255, 0.2);
+    border-left: 4px solid #ffffff;
+    transform: translateZ(0);
+    animation: loaderSpin 1.1s infinite linear;
+}
+
+@keyframes loaderSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

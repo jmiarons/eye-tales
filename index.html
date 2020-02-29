@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<title>Webcam</title>
+		<title>Eye Tales</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+		<meta name="description" content="eye-tails">
+		<meta name="keywords" content="programming,api,transloadit,text-to-speech,machine-learning,hackathon">
+		<meta name="author" content="Joel Miarons">
+		<meta name="application-name" content="Eye Tales">
+		<meta name="apple-mobile-web-app-title" content="Eye Tales">
+		<meta name="theme-color" content="#C9ADA7">
+		<meta name="HandheldFriendly" content="True">
+		<meta name="MobileOptimized" content="320"/>
+		<link rel="canonical" href="http://eyetales.tech">
+
+		<link rel="stylesheet" type="text/css" href="assets/styles/main.css" media="screen"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="assets/styles/main.css" media="screen"/>
-		<div class="button_container">
-			<input type="button" onclick="start()" class="btn-push blue" value="Start" />
-		</div>
-		<center>
-			<video id="vid" autoplay="true">Error</video>
-			<canvas id="canvas" width=320 height=240></canvas>
-		</center>
+		<canvas id="canvas" width=320 height=240 hidden></canvas>
+		<video id="vid" playsinline autoplay muted loop></video>
+
+		<button class="button">
+			<div class="loader button__loader"></div>
+			<span>Start</span>
+    </button>
+
 		<script type="text/javascript" src="assets/js/main.js"></script>
 	</body>
 </html>
