@@ -18,11 +18,11 @@ def post():
         session_id = request_body['session_id']
         # Save image
         image_path = 'data/{}.jpg'.format(random.choice(range(100)))
-        image_encoded = base64.b64decode(image_path)
+        image_encoded = base64.b64decode(image_base64)
         with open(image_path, 'wb') as image_file:
             image_file.write(image_encoded)
         # Apply logic
-        sentence = logic.describe(session_id, image_base64)
+        sentence = logic.describe(session_id, image_path)
         # Transcribe to speech if needed
         if sentence:
             audio_binary = text2speech.synthesize_text(sentence)
