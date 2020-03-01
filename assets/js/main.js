@@ -62,7 +62,7 @@ function start() {
             setInterval(function() {
                 process(iteration, sessionId);
                 ++iteration;
-            }, 1500);
+            }, 3000);
         });
 }
 
