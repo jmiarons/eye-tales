@@ -27,7 +27,7 @@ def post():
         image_encoded = base64.b64decode(image_base64)
         with open(image_path, 'wb') as image_file:
             image_file.write(image_encoded)
-        if iteration % 10 == 0:
+        if iteration % 20 == 0:
             sentence = inference_image_captioning.evaluate(
                 image_path, max_length, encoder, decoder, image_features_extractor, tokenizer
             )
