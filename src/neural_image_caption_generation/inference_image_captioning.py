@@ -36,16 +36,18 @@ def download_image(url):
 
 def init():
     # Download caption annotation files
-    annotation_folder = '/annotations/'
-    if not os.path.exists(os.path.abspath('.') + annotation_folder):
-        annotation_zip = tf.keras.utils.get_file('captions.zip',
-                                                 cache_subdir=os.path.abspath('.'),
-                                                 origin='http://images.cocodataset.org/annotations/annotations_trainval2014.zip',
-                                                 extract=True)
-        annotation_file = os.path.dirname(annotation_zip) + '/annotations/captions_train2014.json'
+    annotation_folder = 'src/neural_image_caption_generation/annotations'
+    if not os.path.exists(annotation_folder):
+        annotation_zip = tf.keras.utils.get_file(
+            'captions.zip',
+            cache_subdir=annotation_folder,
+            origin='http://images.cocodataset.org/annotations/annotations_trainval2014.zip',
+            extract=True
+        )
+        annotation_file = '{}/captions_train2014.json'.format(annotation_folder)
         os.remove(annotation_zip)
     else:
-        annotation_file = './annotations/captions_train2014.json'
+        annotation_file = '{}/captions_train2014.json'.format(annotation_folder)
 
     # Read the json file
     with open(annotation_file, 'r') as f:
@@ -94,8 +96,8 @@ def init():
     # Encoder and Decoder
     encoder = CNN_Encoder(embedding_dim)
     decoder = RNN_Decoder(embedding_dim, units, vocab_size)
-    encoder.load_weights('weights/encoder')
-    decoder.load_weights('weights/decoder')
+    encoder.load_weights('src/neural_image_caption_generation/weights/encoder')
+    decoder.load_weights('src/neural_image_caption_generation/weights/decoder')
     return encoder, decoder, max_length, image_features_extract_model, tokenizer
 
 
