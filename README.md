@@ -6,7 +6,6 @@
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/joelmoff/eye-tales.svg)](https://github.com/joelmoff/eye-tales)
 [![GitHub contributors](https://img.shields.io/github/contributors/joelmoff/eye-tales.svg)](https://GitHub.com/joelmoff/eye-tales/graphs/contributors/)
 [![GitHub license](https://img.shields.io/github/license/joelmoff/eye-tales.svg)](https://github.com/joelmoff/eye-tales/blob/master/LICENSE)
-[![HitCount](http://hits.dwyl.io/joelmoff/eye-tales.svg)](http://hits.dwyl.io/joelmoff/eye-tales)
 
 [Demo](https://eyetales.asuarez.dev) | [API Documentation](https://api.eyetales.asuarez.dev/ui) | [Devpost](https://devpost.com/software/eyetales)
 
