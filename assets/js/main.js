@@ -5,6 +5,7 @@ var buf;        // Audio buffer
 // Global variables
 const player = document.getElementById('vid')
 const button = document.querySelector('.button');
+const audio = document.getElementById('myAudioElement') || new Audio();
 var iteration = 1;
 
 // Ajax
@@ -18,7 +19,14 @@ function callApi(iteration, sessionId, imageBase64) {
         dataType: 'json',
         success: function(data, textStatus, xhr) {
             if (xhr.status === 200) {
-                playByteArray(data);
+                var blob = new Blob([data], {type: 'audio/mpeg'});
+                var objectUrl = URL.createObjectURL(blob);
+                audio.src = objectUrl;
+                audio.onload = function(evt) {
+                        URL.revokeObjectURL(objectUrl);
+                };
+                audio.play();
+                //playByteArray(data);
             } else {
                 console.log('nothing to say', xhr.status);
             }
