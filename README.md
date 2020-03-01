@@ -8,6 +8,7 @@
 [![GitHub license](https://img.shields.io/github/license/joelmoff/eye-tales.svg)](https://github.com/joelmoff/eye-tales/blob/master/LICENSE)
 [![HitCount](http://hits.dwyl.io/joelmoff/eye-tales.svg)](http://hits.dwyl.io/joelmoff/eye-tales)
 
+[Demo](https://eyetales.asuarez.dev) | [API Documentation](https://api.eyetales.asuarez.dev/ui) | [Devpost](https://devpost.com/software/eyetales)
 
 👁 Tool that helps blind people by describing them their environment
 
