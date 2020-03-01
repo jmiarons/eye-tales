@@ -12,8 +12,8 @@ services:
     networks:
       - eye_tales
     ports:
-      - 9080:9080
-      - 3080:3080
+      - 9081:9081
+      - 3081:3081
     restart: always
     depends_on:
       - api_nginx
@@ -28,7 +28,18 @@ services:
     networks:
       - eye_tales
     ports:
-      - 80:80
+      - 8081:8081
+    restart: always
+  web:
+    image: eye_tales_web
+    container_name: eye_tales_web
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    networks:
+      - eye_tales
+    ports:
+      - 8080:80
     restart: always
 
 networks:
