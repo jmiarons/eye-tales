@@ -5,10 +5,11 @@ var buf;        // Audio buffer
 // Global variables
 const player = document.getElementById('vid')
 const button = document.querySelector('.button');
+var iteration = 1;
 
 // Ajax
-function callApi(sessionId, imageBase64) {
-    var formData = {session_id: sessionId, image_base64: imageBase64};
+function callApi(iteration, sessionId, imageBase64) {
+    var formData = {iteration: iteration, session_id: sessionId, image_base64: imageBase64};
     $.ajax({
         type: 'POST',
         url: 'http://localhost/describe',
@@ -33,14 +34,14 @@ function callApi(sessionId, imageBase64) {
 }
 
 // Iterate per image
-function process(sessionId) {
+function process(iteration, sessionId) {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
     context.drawImage(player, 0, 0, canvas.width, canvas.height);
     imageBase64 = canvas.toDataURL();
     imageBase64 = imageBase64.split(',');
     imageBase64.shift();
-    callApi(sessionId, imageBase64.join());
+    callApi(iteration, sessionId, imageBase64.join());
 }
 
 // Main function
@@ -55,7 +56,8 @@ function start() {
             button.classList.add('button--hide');
             const sessionId = (Math.floor(Math.random() * (10000 - 1 + 1)) + 1).toString();
             setInterval(function() {
-                process(sessionId);
+                process(iteration, sessionId);
+                ++iteration;
             }, 1000);
         });
 }

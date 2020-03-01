@@ -37,6 +37,7 @@ def post():
             sentence = logic.describe(session_id, image_path)
         # Transcribe to speech if needed
         if sentence:
+            print('{}: {}'.format(iteration, sentence))
             audio_binary = text2speech.synthesize_text(sentence)
             return send_file(
                 io.BytesIO(audio_binary),
