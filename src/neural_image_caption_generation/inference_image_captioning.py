@@ -36,11 +36,11 @@ def download_image(url):
 
 def init():
     # Download caption annotation files
-    annotation_folder = 'src/neural_image_caption_generation/annotations'
+    annotation_folder = 'data/annotations'
     if not os.path.exists(annotation_folder):
         annotation_zip = tf.keras.utils.get_file(
             'captions.zip',
-            cache_subdir=annotation_folder,
+            cache_subdir='data',
             origin='http://images.cocodataset.org/annotations/annotations_trainval2014.zip',
             extract=True
         )
