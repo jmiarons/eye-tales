@@ -13,7 +13,7 @@ function callApi(iteration, sessionId, imageBase64) {
     var formData = {iteration: iteration, session_id: sessionId, image_base64: imageBase64};
     $.ajax({
         type: 'POST',
-        url: 'http://localhost/describe',
+        url: 'http://34.89.52.65/describe',
         data: JSON.stringify(formData),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
