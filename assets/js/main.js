@@ -1,6 +1,12 @@
+window.onload = init;
+var context;    // Audio context
+var buf;        // Audio buffer
+
+// Global variables
 const player = document.getElementById('vid')
 const button = document.querySelector('.button');
 
+// Ajax
 function callApi(sessionId, imageBase64) {
     var formData = {session_id: sessionId, image_base64: imageBase64};
     $.ajax({
@@ -10,17 +16,23 @@ function callApi(sessionId, imageBase64) {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function(data, textStatus, xhr) {
-            console.log(xhr.status);
+            if (xhr.status === 200) {
+                playByteArray(data);
+            } else {
+                console.log('nothing to say', xhr.status);
+            }
         },
         error: function() {
             // ignore
+            console.log('error');
         },
-        complete: function() {
+        complete: function(xhr, textStatus) {
             // ignore
         }
     });
 }
 
+// Iterate per image
 function process(sessionId) {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
@@ -31,6 +43,7 @@ function process(sessionId) {
     callApi(sessionId, imageBase64.join());
 }
 
+// Main function
 function start() {
     button.classList.add('button--loading');
     button.disabled = true;
@@ -45,6 +58,42 @@ function start() {
                 process(sessionId);
             }, 1000);
         });
+}
+
+// Audio init
+function init() {
+    if (!window.AudioContext) {
+        if (!window.webkitAudioContext) {
+            alert("Your browser does not support any AudioContext and cannot play back this audio.");
+            return;
+        }
+        window.AudioContext = window.webkitAudioContext;
+    }
+    context = new AudioContext();
+}
+
+// Play Byte Array
+function playByteArray(byteArray) {
+    var arrayBuffer = new ArrayBuffer(byteArray.length);
+    var bufferView = new Uint8Array(arrayBuffer);
+    for (i = 0; i < byteArray.length; i++) {
+        bufferView[i] = byteArray[i];
+    }
+    context.decodeAudioData(arrayBuffer, function(buffer) {
+        buf = buffer;
+        play();
+    });
+}
+
+// Play the loaded file
+function play() {
+    // Create a source node from the buffer
+    var source = context.createBufferSource();
+    source.buffer = buf;
+    // Connect to the final output node (the speakers)
+    source.connect(context.destination);
+    // Play immediately
+    source.start(0);
 }
 
 button.addEventListener('click', start);
