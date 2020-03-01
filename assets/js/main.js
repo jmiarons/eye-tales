@@ -11,7 +11,7 @@ var iteration = 1;
 function callApi(iteration, sessionId, imageBase64) {
     var formData = {iteration: iteration, session_id: sessionId, image_base64: imageBase64};
     var request = new XMLHttpRequest();
-    request.open('POST', 'http://34.89.52.65:81/describe', true);
+    request.open('POST', 'https://api.eyetales.asuarez.dev/describe', true);
     request.responseType = 'arraybuffer';
     // Decode asynchronously
     request.onload = function() {

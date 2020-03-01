@@ -6,9 +6,9 @@ info:
   title: Eye Tales API
 
 servers:
-  - url: http://34.89.52.65:81
+  - url: https://api.eyetales.asuarez.dev
     description: Production endpoint.
-  - url: http://localhost:81
+  - url: http://localhost:8081
     description: Development endpoint.
 
 tags:

@@ -12,7 +12,7 @@ class DescribeTest(unittest.TestCase):
     def setUp(self):
         self.session_id = '123456789'
         self.image_path = 'examples/test_4.jpg'
-        self.endpoint = 'http://34.89.52.65:81/describe'
+        self.endpoint = 'https://api.eyetales.asuarez.dev/describe'
         self.audio_path = 'data/output.mp3'
         with open(self.image_path, 'rb') as image_file:
             self.image_base64 = base64.b64encode(image_file.read()).decode('utf-8')
