@@ -10,7 +10,17 @@ from PIL import Image
 from sklearn.utils import shuffle
 
 
-# Find the maximum length of any caption in our dataset
+embedding_dim = 256
+units = 512
+top_k = 5000
+vocab_size = top_k + 1
+
+# Shape of the vector extracted from InceptionV3 is (64, 2048)
+# These two variables represent that vector shape
+features_shape = 2048
+attention_features_shape = 64
+
+
 def calc_max_length(tensor):
     return max(len(t) for t in tensor)
 
@@ -87,17 +97,6 @@ def init():
     encoder.load_weights('weights/encoder')
     decoder.load_weights('weights/decoder')
     return encoder, decoder, max_length, image_features_extract_model, tokenizer
-
-
-embedding_dim = 256
-units = 512
-top_k = 5000
-vocab_size = top_k + 1
-
-# Shape of the vector extracted from InceptionV3 is (64, 2048)
-# These two variables represent that vector shape
-features_shape = 2048
-attention_features_shape = 64
 
 
 class BahdanauAttention(tf.keras.Model):
@@ -220,11 +219,3 @@ def evaluate(image, max_length, encoder, decoder, image_features_extract_model, 
 
     print(result)
     return result
-
-
-if __name__ == '__main__':
-    url = "https://www.surfertoday.com/images/stories/beachquotes.jpg"
-    download_image(url)
-    encoder, decoder, max_length, image_features_extractor, tokenizer = init()
-    print('Result')
-    print(evaluate("1.jpg", max_length, encoder, decoder, image_features_extractor, tokenizer))

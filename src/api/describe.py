@@ -4,10 +4,13 @@ import random
 
 from flask import request, send_file
 
-from src.eye_tales import max_length, encoder, decoder, image_features_extract_model, tokenizer
 from src.helper import response, logic
-from src.neural_image_caption_generation.inference_image_captioning import evaluate
+from src.neural_image_caption_generation import inference_image_captioning
 from src.text_to_speech import text2speech
+
+
+# Initialize image captioning model
+encoder, decoder, max_length, image_features_extractor, tokenizer = inference_image_captioning.init()
 
 
 def post():
@@ -25,7 +28,9 @@ def post():
         with open(image_path, 'wb') as image_file:
             image_file.write(image_encoded)
         if iteration % 10 == 0:
-            sentence = evaluate(image_path, max_length, encoder, decoder, image_features_extract_model, tokenizer)
+            sentence = inference_image_captioning.evaluate(
+                image_path, max_length, encoder, decoder, image_features_extractor, tokenizer
+            )
             sentence = ' '.join(sentence[:-1]).capitalize()
         else:
             # Apply logic
