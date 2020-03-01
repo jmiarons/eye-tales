@@ -1,6 +1,5 @@
-window.onload = init;
-var context;    // Audio context
-var buf;        // Audio buffer
+var context;
+window.addEventListener('load', init, false);
 
 // Global variables
 const player = document.getElementById('vid')
@@ -11,34 +10,31 @@ var iteration = 1;
 // Ajax
 function callApi(iteration, sessionId, imageBase64) {
     var formData = {iteration: iteration, session_id: sessionId, image_base64: imageBase64};
-    $.ajax({
-        type: 'POST',
-        url: 'http://34.89.52.65/describe',
-        data: JSON.stringify(formData),
-        contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        success: function(data, textStatus, xhr) {
-            if (xhr.status === 200) {
-                var blob = new Blob([data], {type: 'audio/mpeg'});
-                var objectUrl = URL.createObjectURL(blob);
-                audio.src = objectUrl;
-                audio.onload = function(evt) {
-                        URL.revokeObjectURL(objectUrl);
-                };
-                audio.play();
-                //playByteArray(data);
-            } else {
-                console.log('nothing to say', xhr.status);
-            }
-        },
-        error: function() {
-            // ignore
-            console.log('error');
-        },
-        complete: function(xhr, textStatus) {
-            // ignore
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://34.89.52.65/describe', true);
+    request.responseType = 'arraybuffer';
+    // Decode asynchronously
+    request.onload = function() {
+        if (request.status == 200) {
+            // console.log('something to say')
+            context.decodeAudioData(request.response, function(buffer) {
+              buf = buffer;
+                var source = context.createBufferSource();  // creates a sound source
+                source.buffer = buffer;                     // tell the source which sound to play
+                source.connect(context.destination);        // connect the source to the context's destination (the speakers)
+                source.start(0);                            // play the source now
+                                                            // note: on older systems, may have to use deprecated noteOn(time);
+            }, function() {
+                console.log('error decoding audio');
+            });
+        } else if (request.status == 204) {
+            // console.log('nothing to say');
+        } else {
+            console.log('error')
         }
-    });
+    }
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(formData));
 }
 
 // Iterate per image
@@ -72,38 +68,14 @@ function start() {
 
 // Audio init
 function init() {
-    if (!window.AudioContext) {
-        if (!window.webkitAudioContext) {
-            alert("Your browser does not support any AudioContext and cannot play back this audio.");
-            return;
-        }
-        window.AudioContext = window.webkitAudioContext;
+    try {
+        // Fix up for prefixing
+        window.AudioContext = window.AudioContext||window.webkitAudioContext;
+        context = new AudioContext();
     }
-    context = new AudioContext();
-}
-
-// Play Byte Array
-function playByteArray(byteArray) {
-    var arrayBuffer = new ArrayBuffer(byteArray.length);
-    var bufferView = new Uint8Array(arrayBuffer);
-    for (i = 0; i < byteArray.length; i++) {
-        bufferView[i] = byteArray[i];
+    catch(e) {
+        alert('Web Audio API is not supported in this browser');
     }
-    context.decodeAudioData(arrayBuffer, function(buffer) {
-        buf = buffer;
-        play();
-    });
-}
-
-// Play the loaded file
-function play() {
-    // Create a source node from the buffer
-    var source = context.createBufferSource();
-    source.buffer = buf;
-    // Connect to the final output node (the speakers)
-    source.connect(context.destination);
-    // Play immediately
-    source.start(0);
 }
 
 button.addEventListener('click', start);
