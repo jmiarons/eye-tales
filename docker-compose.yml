@@ -28,6 +28,17 @@ services:
     networks:
       - eye_tales
     ports:
+      - 81:81
+    restart: always
+  web:
+    image: eye_tales_web
+    container_name: eye_tales_web
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    networks:
+      - eye_tales
+    ports:
       - 80:80
     restart: always
 
